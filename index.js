@@ -8,7 +8,7 @@ module.exports = function(obj) {
 module.exports.pick = function() {
   var obj = {};
   Array.prototype.forEach.call(arguments, function(key) {
-    obj[key] = module.exports.data;
+    obj[key] = module.exports.data[key];
   });
   module.exports.data = obj;
   return module.exports;
