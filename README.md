@@ -24,23 +24,25 @@ html
       script( src='/bundle.js' )
 ````
 
-**client.js***
+**client.js**
 ````javascript
 // Browserify module
-var API_URL = require('sharify').data.API_URL;
+var sd = require('sharify').data;
 var $ = require('jquery');
-$.ajax({ url: API_URL + '/artwork/andy-warhol-skull' });
+$(function() {
+  $.ajax({ url: sd.API_URL + '/artwork/andy-warhol-skull' });
+});
 ````
 
 ## API
 
 ## sharify(obj)
 
-Includes a hash(object) to be shared on the client-side.
+Includes a hash to be shared between modules.
 
 ## sharify.pick([keys...])
 
-Whitelists keys to conveniently exclude sensitive data from a configuration hash.
+Whitelists keys to conveniently exclude sensitive data.
 
 ## sharify.add(app)
 
