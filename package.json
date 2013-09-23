@@ -20,9 +20,6 @@
   "scripts": {
   	"test": "make test"
 	},
-	"dependencies": {
-    "underscore": "*"
-  },
   "devDependencies": {
     "mocha": "*",
     "should": "*",

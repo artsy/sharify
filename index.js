@@ -1,12 +1,16 @@
-var _ = require('underscore');
-
 module.exports = function(obj) {
-  module.exports.data = _.extend(module.exports.data, obj);
+  for(var key in obj) {
+    module.exports.data[key] = obj[key];
+  }
   return module.exports;
 };
 
 module.exports.pick = function() {
-  module.exports.data = _.pick(module.exports.data, _.toArray(arguments));
+  var obj = {};
+  Array.prototype.forEach.call(arguments, function(key) {
+    obj[key] = module.exports.data;
+  });
+  module.exports.data = obj;
   return module.exports;
 };
 
