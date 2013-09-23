@@ -1,0 +1,33 @@
+{
+  "name": "sharify",
+  "version": "0.0.1",
+  "description": "Easily share data between your server-side and browserify modules.",
+  "keywords": [
+    "browserify",
+    "shared",
+    "data",
+    "expose",
+    "bootstrap"
+  ],
+  "author": {
+    "name": "Craig Spaeth",
+    "email": "craigspaeth@gmail.com",
+    "url": "http://craigspaeth.com"
+  },
+  "engines": {
+    "node": ">= 0.10.x"
+  },
+  "scripts": {
+  	"test": "make test"
+	},
+	"dependencies": {
+    "underscore": "*"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "should": "*",
+    "express": "*",
+    "browserify": "*",
+    "jade": "*"
+  }
+}
