@@ -15,18 +15,18 @@ app.use(sharify({
 }));
 ````
 
-2. Inject script and use data in template if you want
+2. Inject script and use the shared data in template if you want
 
 ````jade
 html
   body
+    if sd.NODE_ENV == 'development'
+      #debug-modal
     #scripts
       //- Make sure this is above your other scripts
-      != sharifyScript
+      != sharifyScript()
       script( src='/bundle.js' )
       //- `sd` is short hand for sharify.data
-      if sd.NODE_ENV == 'production'
-        include ./google-analytics.html
 ````
 
 3. Use in browserify/server-side modules
@@ -40,22 +40,17 @@ module.exports = function Artwork(id) {
 
 # Dynamic request level data
 
-Sharify can also share dynamic data per request, just pass a callback as the second argument to access the request object and your browserified code can require it like constant data.
+Sharify simply injects data into the response locals. If you'd like to add dynamic data that can be required on the client like the static data passed to the constructure, simply inject it into `res.locals.sd`.
 
 ````javascript
-app.use(sharify(
-  {
-    API_URL: 'http://artsy.net/api/v1',
-    NODE_ENV: process.env.NODE_ENV
-  },
-  function(req) {
-    return {
-      SESSION_ID: req.session.id,
-      USER_AGENT: req.headers['user-agent'],
-      AB_TEST: Math.random() > 0.5 ? 'A' : 'B'
-    }
-  }
-);
+app.use(sharify({
+  API_URL: 'http://artsy.net/api/v1',
+  NODE_ENV: process.env.NODE_ENV
+});
+app.use(function(req, res, next) {
+  res.locals.sd.SESSION_ID = req.session.id;
+  next();
+});
 ````
 
 ## Contributing
