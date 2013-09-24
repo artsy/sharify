@@ -1,31 +1,21 @@
 module.exports = function(data) {
   
-  // Immediately export constant data;
-  if (typeof data == 'object'){
-    module.exports.data = data;
+  // Immediately store and export initial shared data
+  for(var key in data) {
+    module.exports.data[key] = data[key];
   }
   
-  // Return middleware
+  // Middleware that injects the shared data into res.locals under "sd"
   return function(req, res, next) {
-    var resData = {};
-    
-    // Inject any request-level data
-    if (typeof data == 'function'){
-      var resData = data(req);
-    }
-    
-    // Clone the original data object
+    res.locals.sd = {};
     for(var key in module.exports.data) {
-      resData[key] = module.exports.data[key];
+      res.locals.sd[key] = module.exports.data[key];
     }
-    
-    // Pass in the locals needed to bootstrap the data
-    res.locals.sd = resData;
-    res.locals.sharifyScript = '' +
-      '<script type="text/javascript">' + 
-        'window.__sharifyData = ' + JSON.stringify(data) + ';' +
-      '</script>';
-    
+    res.locals.sharifyScript = function() {
+      return '<script type="text/javascript">' + 
+               'window.__sharifyData = ' + JSON.stringify(res.locals.sd) + ';' +
+             '</script>';
+    }
     next();
   };
 };

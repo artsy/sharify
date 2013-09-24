@@ -22,7 +22,7 @@ html
   body
     #scripts
       //- Make sure this is above your other scripts
-      != sharifyScript
+      != sharifyScript()
       script( src='/bundle.js' )
       //- `sd` is short hand for sharify.data
       if sd.NODE_ENV == 'production'
@@ -40,19 +40,15 @@ module.exports = function Artwork(id) {
 
 # Dynamic request level data
 
-Sharify can also share dynamic data per request, just pass a function instead of an object to access the request object and your browserified code can require it like constant data.
+Sharify simply injects data into the response locals. If you'd like to add dynamic data that can be required on the client like the static data simply inject it into `res.locals.sd`.
 
 ````javascript
 app.use(sharify({
   API_URL: 'http://artsy.net/api/v1',
   NODE_ENV: process.env.NODE_ENV
 });
-app.use(sharify(function(req) {
-  return {
-    SESSION_ID: req.session.id,
-    USER_AGENT: req.headers['user-agent'],
-    AB_TEST: Math.random() > 0.5 ? 'A' : 'B'
-  }
+app.use(function(req, res, next) {
+  res.locals.sd.SESSION_ID = req.session.id;
 });
 ````
 

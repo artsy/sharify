@@ -18,7 +18,7 @@ describe('sharify', function() {
     it('returns middleware that adds a sharify script to locals', function() {
       var locals = {};
       sharify({ foo: 'bar' })({}, { locals: locals }, function(){});
-      locals.sharifyScript.should.include('window.__sharifyData = {"foo":"bar"};');
+      locals.sharifyScript().should.include('window.__sharifyData = {"foo":"bar"};');
     });
     
     it('exports the data to be required elsewhere', function() {
@@ -26,16 +26,6 @@ describe('sharify', function() {
       sharify({ foo: 'bar' })({}, { locals: locals }, function(){});
       var sd = require('./').data;
       sd.foo.should.equal('bar');
-    });
-    
-    it('can use request-level data', function() {
-      var locals = {};
-      sharify({ baz: 'foo' })
-      sharify(function(req) {
-       return { foo: 'bar', sessionId: req.session.id };
-      })({ session: { id: 'foobarbaz' } }, { locals: locals }, function(){});
-      locals.sd.sessionId.should.equal('foobarbaz');
-      locals.sd.baz.should.equal('foo');
     });
   });
   
