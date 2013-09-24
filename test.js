@@ -30,10 +30,12 @@ describe('sharify', function() {
     
     it('can use request-level data', function() {
       var locals = {};
-      sharify({}, function(req) {
+      sharify({ baz: 'foo' })
+      sharify(function(req) {
        return { foo: 'bar', sessionId: req.session.id };
       })({ session: { id: 'foobarbaz' } }, { locals: locals }, function(){});
       locals.sd.sessionId.should.equal('foobarbaz');
+      locals.sd.baz.should.equal('foo');
     });
   });
   
