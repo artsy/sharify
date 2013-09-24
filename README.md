@@ -50,8 +50,10 @@ app.use(sharify({
 });
 app.use(function(req, res, next) {
   res.locals.sd.SESSION_ID = req.session.id;
+  res.locals.sd.AB_TEST = Math.random() > 0.5 ? 'A' : 'B';
   next();
 });
+// You can now get the session id with `require('sharify').data.SESSION_ID`
 ````
 
 ## Contributing
