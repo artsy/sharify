@@ -11,7 +11,7 @@ Given an [express](https://github.com/visionmedia/express) app with [jade](https
 var sharify = require('sharify');
 var app = require('express')();
 var config = {
-  API_URL: 'http://artsy.net',
+  API_URL: 'http://artsy.net/api/v1',
   NODE_ENV: process.env.NODE_ENV
 }
 sharify(config).use(app);
