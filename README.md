@@ -20,25 +20,26 @@ app.use(sharify({
 ````jade
 html
   body
+    //- `sd` is short hand for sharify.data
     if sd.NODE_ENV == 'development'
       #debug-modal
     #scripts
       //- Make sure this is above your other scripts
       != sharifyScript()
       script( src='/bundle.js' )
-      //- `sd` is short hand for sharify.data
 ````
 
 3. Use in browserify/server-side modules
 
 ````javascript
 var sd = require('sharify').data;
+
 module.exports = function Artwork(id) {
   this.url = sd.API_URL + '/artwork/'  + this.id;
 };
 ````
 
-# Dynamic request level data
+## Adding dynamic/request level data
 
 Sharify simply injects data into the response locals. If you'd like to add dynamic data that can be required on the client like the static data passed to the constructure, simply inject it into `res.locals.sd`.
 
