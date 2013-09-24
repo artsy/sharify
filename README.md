@@ -6,7 +6,7 @@ Easily share data between your server-side and browserify modules.
 
 Given an [express](https://github.com/visionmedia/express) app with [jade](https://github.com/visionmedia/jade).
 
-1. Add middleware
+Add middleware
 
 ````javascript
 app.use(sharify({
@@ -15,7 +15,7 @@ app.use(sharify({
 }));
 ````
 
-2. Inject script and use the shared data in template if you want
+Inject sharify script in the view
 
 ````jade
 html
@@ -29,7 +29,7 @@ html
       script( src='/bundle.js' )
 ````
 
-3. Use in browserify/server-side modules
+Use in browserify/server-side modules
 
 ````javascript
 var sd = require('sharify').data;
