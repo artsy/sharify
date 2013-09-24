@@ -24,6 +24,7 @@ html
       //- Make sure this is above your other scripts
       != sharifyScript
       script( src='/bundle.js' )
+      //- `sd` is short hand for sharify.data
       if sd.NODE_ENV == 'production'
         include ./google-analytics.html
 ````
@@ -39,7 +40,7 @@ module.exports = function Artwork(id) {
 
 # Dynamic and request level data
 
-Sharify also accepts a function that passes in the request object so you can share dynamic or request level data such as a session id.
+Sharify also accepts a function that passes in the request object so you can easily pass dynamic or request level data to client-side modules.
 
 ````javascript
 app.use(sharify(function(req) {
@@ -53,7 +54,7 @@ app.use(sharify(function(req) {
 
 ## Contributing
 
-Please fork the project and submit a pull request with tests. Install node modules `npm install` and run tests with `make test`
+Please fork the project and submit a pull request with tests. Install node modules `npm install` and run tests with `make test`.
 
 ## License
 
