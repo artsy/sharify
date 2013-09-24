@@ -11,29 +11,24 @@ $(function() {
   });
 });
 },{"../":2}],2:[function(require,module,exports){
-module.exports = function(data, reqDataCallback) {
+module.exports = function(data) {
   
-  // Immediately export constant data
-  module.exports.data = data;
+  // Immediately store and export initial shared data
+  for(var key in data) {
+    module.exports.data[key] = data[key];
+  }
   
-  // Return middleware
+  // Middleware that injects the shared data into res.locals under "sd"
   return function(req, res, next) {
-    
-    // Inject any request-level data
-    if (reqDataCallback){
-      var reqData = reqDataCallback(req);
-      for(var key in reqData) {
-        data[key] = reqData[key];
-      }
+    res.locals.sd = {};
+    for(var key in module.exports.data) {
+      res.locals.sd[key] = module.exports.data[key];
     }
-    
-    // Pass in the locals needed to bootstrap the data
-    res.locals.sd = data;
-    res.locals.sharifyScript = '' +
-      '<script type="text/javascript">' + 
-        'window.__sharifyData = ' + JSON.stringify(data) + ';' +
-      '</script>';
-    
+    res.locals.sharifyScript = function() {
+      return '<script type="text/javascript">' + 
+               'window.__sharifyData = ' + JSON.stringify(res.locals.sd) + ';' +
+             '</script>';
+    }
     next();
   };
 };
