@@ -7,12 +7,6 @@ describe('sharify', function() {
     it('adds to the data', function() {
       sharify({ foo: 'bar' }).data.foo.should.equal('bar');
     });
-    
-    it('generates a script that can be included on the client', function() {
-      var app = { locals: {} }
-      sharify({ foo: 'bar' }).use(app).script.should
-        .include('window.__sharifyData = {"foo":"bar"};')
-    });
   });
   
   describe('#use', function() {
@@ -21,6 +15,15 @@ describe('sharify', function() {
       var app = { locals: {} }
       sharify({ foo: 'bar' }).use(app);
       app.locals.sharify.data.foo.should.equal('bar');
+    });
+  });
+  
+  describe('#script', function() {
+    
+    it('generates a script that can be included on the client', function() {
+      var app = { locals: {} }
+      sharify({ foo: 'bar' }).use(app).script().should
+        .include('window.__sharifyData = {"foo":"bar"};')
     });
   });
   

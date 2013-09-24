@@ -23,7 +23,7 @@ html
   body
     #scripts
       //- Make sure this is above your other scripts
-      != sharify.script
+      != sharify.script()
       script( src='/jquery.js' )
       script( src='/bundle.js' )
 ````
@@ -48,7 +48,7 @@ Includes a hash to be shared between modules.
 
 Adds `sharify` to an express app's locals so `sharify.script` can be injected in views.
 
-## sharify.script
+## sharify.script()
 
 Script tag that bootstaps shared data.
 
