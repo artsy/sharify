@@ -4,26 +4,31 @@ describe('sharify', function() {
   
   describe('constructor', function() {
     
-    it('adds to the data', function() {
-      sharify({ foo: 'bar' }).data.foo.should.equal('bar');
+    it('returns middleware that adds the data to locals', function() {
+      var locals = {};
+      sharify({ foo: 'bar' })({}, { locals: locals }, function(){});
+      locals.sd.foo.should.equal('bar');
     });
-  });
-  
-  describe('#use', function() {
-
-    it('adds the data to an express app locals', function() {
-      var app = { locals: {} }
-      sharify({ foo: 'bar' }).use(app);
-      app.locals.sharify.data.foo.should.equal('bar');
-    });
-  });
-  
-  describe('#script', function() {
     
-    it('generates a script that can be included on the client', function() {
-      var app = { locals: {} }
-      sharify({ foo: 'bar' }).use(app).script().should
-        .include('window.__sharifyData = {"foo":"bar"};')
+    it('returns middleware that adds a sharify script to locals', function() {
+      var locals = {};
+      sharify({ foo: 'bar' })({}, { locals: locals }, function(){});
+      locals.sharifyScript.should.include('window.__sharifyData = {"foo":"bar"};');
+    });
+    
+    it('exports the data to be required elsewhere', function() {
+      var locals = {};
+      sharify({ foo: 'bar' })({}, { locals: locals }, function(){});
+      var sd = require('./').data;
+      sd.foo.should.equal('bar');
+    });
+    
+    it('can use request-level data', function() {
+      var locals = {};
+      sharify(function(req) {
+       return { foo: 'bar', sessionId: req.session.id };
+      })({ session: { id: 'foobarbaz' } }, { locals: locals }, function(){});
+      locals.sd.sessionId.should.equal('foobarbaz');
     });
   });
   
