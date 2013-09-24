@@ -15,18 +15,18 @@ app.use(sharify({
 }));
 ````
 
-2. Inject script and use data in template if you want
+2. Inject script and use the shared data in template if you want
 
 ````jade
 html
   body
+    if sd.NODE_ENV == 'development'
+      #debug-modal
     #scripts
       //- Make sure this is above your other scripts
       != sharifyScript()
       script( src='/bundle.js' )
       //- `sd` is short hand for sharify.data
-      if sd.NODE_ENV == 'production'
-        include ./google-analytics.html
 ````
 
 3. Use in browserify/server-side modules
@@ -40,7 +40,7 @@ module.exports = function Artwork(id) {
 
 # Dynamic request level data
 
-Sharify simply injects data into the response locals. If you'd like to add dynamic data that can be required on the client like the static data simply inject it into `res.locals.sd`.
+Sharify simply injects data into the response locals. If you'd like to add dynamic data that can be required on the client like the static data passed to the constructure, simply inject it into `res.locals.sd`.
 
 ````javascript
 app.use(sharify({
@@ -49,6 +49,7 @@ app.use(sharify({
 });
 app.use(function(req, res, next) {
   res.locals.sd.SESSION_ID = req.session.id;
+  next();
 });
 ````
 
