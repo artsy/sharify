@@ -14,25 +14,14 @@ module.exports = function(obj) {
   for(var key in obj) {
     module.exports.data[key] = obj[key];
   }
-  return module.exports;
-};
-
-module.exports.pick = function() {
-  var obj = {};
-  Array.prototype.forEach.call(arguments, function(key) {
-    console.log(key);
-    obj[key] = module.exports.data[key];
-  });
-  console.log(obj);
-  module.exports.data = obj;
-  return module.exports;
-};
-
-module.exports.add = function(app) {
-  app.locals.sharify = module.exports;
   module.exports.script = '<script type="text/javascript">' + 
                           'window.__sharifyData = ' + JSON.stringify(module.exports.data) + ';' +
                           '</script>';
+  return module.exports;
+};
+
+module.exports.use = function(app) {
+  app.locals.sharify = module.exports;
   return module.exports;
 };
 

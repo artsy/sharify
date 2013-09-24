@@ -14,6 +14,6 @@ app.get('*', function(req, res) {
   res.render('index');
 });
 
-sharify(config).pick('NAME', 'API_URL').add(app);
+sharify(config).use(app);
 
 app.listen(4000, function() { console.log("Listening on 4000") });
