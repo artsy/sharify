@@ -4,6 +4,11 @@ describe('sharify', function() {
   
   describe('constructor', function() {
     
+    it('immediately exports constant data', function() {
+      sharify({ foo: 'bar' });
+      sharify.data.foo.should.equal('bar');
+    });
+    
     it('returns middleware that adds the data to locals', function() {
       var locals = {};
       sharify({ foo: 'bar' })({}, { locals: locals }, function(){});
@@ -25,7 +30,7 @@ describe('sharify', function() {
     
     it('can use request-level data', function() {
       var locals = {};
-      sharify(function(req) {
+      sharify({}, function(req) {
        return { foo: 'bar', sessionId: req.session.id };
       })({ session: { id: 'foobarbaz' } }, { locals: locals }, function(){});
       locals.sd.sessionId.should.equal('foobarbaz');

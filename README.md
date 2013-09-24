@@ -38,18 +38,24 @@ module.exports = function Artwork(id) {
 };
 ````
 
-# Dynamic and request level data
+# Dynamic request level data
 
-Sharify also accepts a function that passes in the request object so you can easily pass dynamic or request level data to client-side modules.
+Sharify can also share dynamic data per request, just pass a callback as the second argument to access the request object and your browserified code can require it like constant data.
 
 ````javascript
-app.use(sharify(function(req) {
-  return {
-    SESSION_ID: req.session.id,
-    USER_AGENT: req.headers['user-agent'],
-    AB_TEST: Math.random() > 0.5 ? 'A' : 'B'
+app.use(sharify(
+  {
+    API_URL: 'http://artsy.net/api/v1',
+    NODE_ENV: process.env.NODE_ENV
+  },
+  function(req) {
+    return {
+      SESSION_ID: req.session.id,
+      USER_AGENT: req.headers['user-agent'],
+      AB_TEST: Math.random() > 0.5 ? 'A' : 'B'
+    }
   }
-});
+);
 ````
 
 ## Contributing
