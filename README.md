@@ -10,8 +10,11 @@ Given an [express](https://github.com/visionmedia/express) app with [jade](https
 ````javascript
 var sharify = require('sharify');
 var app = require('express')();
-sharify.use(app);
-sharify({ API_URL: process.env.API_URL, NODE_ENV: process.env.NODE_ENV });
+var config = {
+  API_URL: 'http://artsy.net',
+  NODE_ENV: process.env.NODE_ENV
+}
+sharify(config).use(app);
 ````
 
 **index.jade**
@@ -44,6 +47,14 @@ Includes a hash to be shared between modules.
 ## sharify.use(app)
 
 Adds `sharify` to an express app's locals so `sharify.script` can be injected in views.
+
+## sharify.script
+
+Script tag that bootstaps shared data.
+
+## sharify.data
+
+The hash of shared data.
 
 ## Contributing
 
