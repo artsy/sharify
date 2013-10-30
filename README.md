@@ -1,6 +1,6 @@
 # sharify
 
-Easily share data between your server-side and browserify modules.
+Easily share data between modules meant to run on the server and client using browserify.
 
 ## Example
 
