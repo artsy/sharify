@@ -29,7 +29,7 @@ html
       script( src='/bundle.js' )
 ````
 
-Use in browserify/server-side modules
+Use in shared module
 
 ````javascript
 var sd = require('sharify').data;
