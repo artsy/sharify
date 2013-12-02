@@ -41,7 +41,7 @@ module.exports = function Artwork(id) {
 
 ## Adding dynamic/request level data
 
-Sharify simply injects data into the [response locals](http://expressjs.com/api.html#res.locals). If you'd like to add dynamic data that can be required on the client like the static data passed to the constructor, simply inject it into `res.locals.sd`.
+Sharify simply injects data into the [response locals](http://expressjs.com/api.html#res.locals) and bootstraps it to the client. If you'd like to add dynamic data that can be required on the client like the static data passed to the constructor, simply inject it into `res.locals.sd`.
 
 ````javascript
 app.use(sharify({
