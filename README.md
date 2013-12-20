@@ -50,7 +50,7 @@ var Artwork = require('../models/artwork'),
 new View({ model: new Artwork() });
 ````
 
-## Bootstrapping Request-level Data to the Client
+### Bootstrapping Request-level Data to the Client
 
 You can use sharify to [bootstrap](http://backbonejs.org/#FAQ-bootstrap) dynamic data as well.
 
