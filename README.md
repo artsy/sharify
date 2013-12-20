@@ -6,7 +6,7 @@ Easily share data between modules meant to run on the server and client using br
 
 The following example shares a [Backbone Model](http://backbonejs.org/) between the server and browser. However, this could be applied to any module shared server/client.
 
-Inject some constant data on the server
+Inject some constant data on the server and mount sharify
 
 ````javascript
 var sharify = require('sharify');
@@ -14,38 +14,18 @@ sharify.data = {
   API_URL: 'http://artsy.net/api/v1',
   NODE_ENV: process.env.NODE_ENV
 };
-//...
-app.listen();
-````
-
-Use in a module that can run on the server or client using Browserify
-
-````javascript
-var backbone = require('backbone'),
-    API_URL = require('sharify').data;
-
-module.exports = Artwork = Backbone.Model.extend({
-  url: API_URL + '/artwork/'  + this.id
-};
-````
-
-Add middleware, and use sharify data to [bootstrap](http://backbonejs.org/#FAQ-bootstrap) dynamic data as well.
-
-````javascript
-var Artwork = require('../models/artwork');
-
 app.use(sharify);
-app.get('artwork/:id', function(req, res, next) {
-  new Artwork({ id: req.params.id }).fetch({
-    success: function(artwork) {
+````
 
-      // Inject the fetched JSON into sharify so we can
-      // require it on the client.
-      res.locals.sharify.data.ARTWORK_JSON = artwork.toJSON();
-      next();
-    }
-  });
-});
+Use in a module that can run on the server or client
+
+````javascript
+var Backbone = require('backbone'),
+    API_URL = require('sharify').data.API_URL;
+
+var Artwork = module.exports = Backbone.Model.extend({
+  urlRoot: API_URL + '/artwork/'
+};
 ````
 
 Inject sharify script in the view
@@ -61,7 +41,35 @@ html
       script( src='/bundle.js' )
 ````
 
-Use sharify data on the client
+Use the shared module on the client
+
+````javascript
+var Artwork = require('../models/artwork'),
+    View = require('view.js');
+
+new View({ model: new Artwork() });
+````
+
+## Bootstrapping Request-level Data to the Client
+
+You can use sharify to [bootstrap](http://backbonejs.org/#FAQ-bootstrap) dynamic data as well.
+
+Inject data into the `sharify.data` local
+
+````javascript
+var Artwork = require('../models/artwork');
+
+app.get('artwork/:id', function(req, res, next) {
+  new Artwork({ id: req.params.id }).fetch({
+    success: function(artwork) {
+      res.locals.sharify.data.ARTWORK_JSON = artwork.toJSON();
+      next();
+    }
+  });
+});
+````
+
+Require the data on the client
 
 ````javascript
 var Artwork = require('../models/artwork'),
