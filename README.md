@@ -43,8 +43,8 @@ html
 
 Use the shared module server/client
 
-server.js
 ````javascript
+// server.js
 var Artwork = require('../models/artwork');
 
 app.get('/artwork/:id', function(req, res) {
@@ -52,8 +52,8 @@ app.get('/artwork/:id', function(req, res) {
 });
 ````
 
-client.js
 ````javascript
+// client.js
 var Artwork = require('../models/artwork'),
     View = require('view.js');
 
