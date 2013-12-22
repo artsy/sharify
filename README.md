@@ -47,7 +47,7 @@ server.js
 ````javascript
 var Artwork = require('../models/artwork');
 
-app.get('/artwork/:id, function(req, res) {
+app.get('/artwork/:id', function(req, res) {
   new Artwork({ id: req.params.id }).fetch(//...);
 });
 ````
