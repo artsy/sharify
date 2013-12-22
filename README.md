@@ -41,8 +41,18 @@ html
       script( src='/bundle.js' )
 ````
 
-Use the shared module on the client
+Use the shared module server/client
 
+server.js
+````javascript
+var Artwork = require('../models/artwork');
+
+app.get('/artwork/:id, function(req, res) {
+  new Artwork({ id: req.params.id }).fetch(//...);
+});
+````
+
+client.js
 ````javascript
 var Artwork = require('../models/artwork'),
     View = require('view.js');
