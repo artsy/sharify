@@ -4,12 +4,16 @@ module.exports = function(req, res, next) {
     data: module.exports.data,
     script: function() {
       return '<script type="text/javascript">' +
-               'window.__sharifyData = ' + JSON.stringify(module.exports.data) + ';' +
+             'window.__sharifyData = ' + JSON.stringify(res.locals.sd) + ';' +
              '</script>';
     }
   };
+
   // Alias the sharify short-hand for convience
-  res.locals.sd = res.locals.sharify.data;
+  res.locals.sd = {};
+  for(var key in module.exports.data) {
+    res.locals.sd[key] = module.exports.data[key];
+  }
   next();
 };
 
