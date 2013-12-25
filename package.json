@@ -1,6 +1,6 @@
 {
   "name": "sharify",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Easily share data between modules meant to run on the server and client using browserify.",
   "keywords": [
     "browserify",
