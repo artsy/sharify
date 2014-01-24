@@ -26,5 +26,9 @@
     "express": "*",
     "browserify": "*",
     "jade": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/artsy/sharify.git"
   }
 }
