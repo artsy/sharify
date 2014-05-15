@@ -6,7 +6,7 @@ Easily share data between Browserify modules meant to run on the server and clie
 
 The following example shares a [Backbone Model](http://backbonejs.org/) between the server and browser. However, this could be applied to any module shared server/client.
 
-Inject some constant data on the server and mount sharify
+### Inject some constant data on the server and mount sharify
 
 ````javascript
 var sharify = require('sharify');
@@ -17,7 +17,7 @@ sharify.data = {
 app.use(sharify);
 ````
 
-Use in a module that can run on the server or client
+### Use in a module that can run on the server or client
 
 ````javascript
 var Backbone = require('backbone'),
@@ -28,7 +28,7 @@ var Artwork = module.exports = Backbone.Model.extend({
 };
 ````
 
-Inject sharify script in the view
+### Inject sharify script in the view
 
 ````jade
 html
@@ -44,7 +44,7 @@ html
 
 _NOTE: Sharify will safely expose the `sharify.data` and `sd` globals to the client-side for the convenience of sharing templates server/client._
 
-Use the shared module server/client
+### Use the shared module server/client
 
 ````javascript
 // server.js
