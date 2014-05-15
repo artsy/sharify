@@ -33,6 +33,7 @@ Inject sharify script in the view
 ````jade
 html
   body
+    //- Adds `sharify.data` and a convenient `sd` short hand to locals
     if sharify.data.NODE_ENV == 'development'
       #debug-modal
     #scripts
