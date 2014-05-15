@@ -41,7 +41,7 @@ html
       script( src='/bundle.js' )
 ````
 
-_NOTE:: Sharify will safely expose the `sd` and `sharify.data` globals to the client-side so you can access these locals in the same way on the client._
+_NOTE: Sharify will safely expose the `sd` and `sharify.data` globals to the client-side so you can access these locals in the same way on the client._
 
 Use the shared module server/client
 
